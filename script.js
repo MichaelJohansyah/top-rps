@@ -1,43 +1,68 @@
-console.log("tess");
+let humanScore = 0;
+let computerScore = 0;
 
-const inputButton = document.querySelector("#inputButton");
-const log = document.querySelector("#log");
-
-inputButton.addEventListener("click", () => {
-  let sign = prompt("What's your choice between rock, paper and scissors?");
-
-  if (sign === null) {
-    log.innerText = "OK, maybe next time.";
-  } else if (sign.toLowerCase() === "") {
-    log.innerText = "Don't be shy, enter your sign!";
-  } else if (sign.toLowerCase() === "scorpio") {
-    log.innerText = "Wow! I'm a Scorpio too!";
+function playRound(humanSelection, computerSelection) {
+  if (humanSelection == "rock") {
+    if (computerSelection == "paper") {
+      console.log("you kalah woilah");
+      computerScore++;
+    } else if (computerSelection == "rock") {
+      console.log("seri cuy");
+    } else {
+      console.log("you menang cuy");
+      humanScore++;
+    }
+  } else if (humanSelection == "paper") {
+    if (computerSelection == "paper") {
+      console.log("seri cuy");
+    } else if (computerSelection == "rock") {
+      console.log("you menang cuy");
+      humanScore++;
+    } else {
+      console.log("you kalah woilah");
+      computerScore++;
+    }
   } else {
-    log.innerText = `${sign} is my favorite!`;
+    if (computerSelection == "scissors") {
+      console.log("seri cuy");
+    } else if (computerSelection == "rock") {
+      console.log("you kalah woilah");
+      computerScore++;
+    } else {
+      console.log("you menang cuy");
+      humanScore++;
+    }
   }
-});
-
-function getRandomInt(max) {
-  return Math.floor(Math.random() * max);
 }
 
 function getComputerChoice() {
-  randomValue = getRandomInt(3);
+  randomValue = Math.floor(Math.random() * 3);
   switch (randomValue) {
     case 0:
-      return "Rock";
+      return "rock";
     case 1:
-      return "Paper";
+      return "paper";
     default:
-      return "Scissors";
+      return "scissors";
   }
 }
 
-function getHumanChoice(){
-  
+function getHumanChoice() {
+  let humanChoice = prompt("You pilih what? rock, paper ato scissors?");
+  return humanChoice;
 }
 
-console.log(getComputerChoice());
-console.log(getComputerChoice());
-console.log(getComputerChoice());
-console.log(getComputerChoice());
+function playGame(times) {
+  while (times != 0) {
+    let humanSelection = getHumanChoice().toLowerCase();
+    let computerSelection = getComputerChoice().toLowerCase();
+    console.log(
+      `you pilih ${humanSelection} and computer pilih ${computerSelection}`
+    );
+    playRound(humanSelection, computerSelection);
+    console.log(`you = ${humanScore}, computer = ${computerScore}`);
+    times--;
+  }
+}
+
+playGame(5);
