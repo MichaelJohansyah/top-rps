@@ -1,68 +1,79 @@
 let humanScore = 0;
 let computerScore = 0;
-
-function playRound(humanSelection, computerSelection) {
-  if (humanSelection == "rock") {
-    if (computerSelection == "paper") {
-      console.log("you kalah woilah");
-      computerScore++;
-    } else if (computerSelection == "rock") {
-      console.log("seri cuy");
-    } else {
-      console.log("you menang cuy");
-      humanScore++;
-    }
-  } else if (humanSelection == "paper") {
-    if (computerSelection == "paper") {
-      console.log("seri cuy");
-    } else if (computerSelection == "rock") {
-      console.log("you menang cuy");
-      humanScore++;
-    } else {
-      console.log("you kalah woilah");
-      computerScore++;
-    }
-  } else {
-    if (computerSelection == "scissors") {
-      console.log("seri cuy");
-    } else if (computerSelection == "rock") {
-      console.log("you kalah woilah");
-      computerScore++;
-    } else {
-      console.log("you menang cuy");
-      humanScore++;
-    }
-  }
-}
+let totalPlayed = 0;
 
 function getComputerChoice() {
-  randomValue = Math.floor(Math.random() * 3);
-  switch (randomValue) {
-    case 0:
-      return "rock";
-    case 1:
-      return "paper";
-    default:
-      return "scissors";
-  }
+    randomValue = Math.floor(Math.random() * 3);
+    switch (randomValue) {
+        case 0:
+            return "batu";
+        case 1:
+            return "gunting";
+        default:
+            return "kertas";
+    }
 }
 
-function getHumanChoice() {
-  let humanChoice = prompt("You pilih what? rock, paper ato scissors?");
-  return humanChoice;
-}
+function playGame(humanChoice) {
+    totalPlayed++;
+    let humanSelection = humanChoice;
+    let computerSelection = getComputerChoice();
 
-function playGame(times) {
-  while (times != 0) {
-    let humanSelection = getHumanChoice().toLowerCase();
-    let computerSelection = getComputerChoice().toLowerCase();
-    console.log(
-      `you pilih ${humanSelection} and computer pilih ${computerSelection}`
-    );
+    document.getElementById(
+        "choice"
+    ).innerHTML = `Kamu : ${humanSelection.toUpperCase()} VS Musuh : ${computerSelection.toUpperCase()}`;
+
     playRound(humanSelection, computerSelection);
-    console.log(`you = ${humanScore}, computer = ${computerScore}`);
-    times--;
-  }
+
+    document.getElementById(
+        "skor"
+    ).innerHTML = `Skor kamu : ${humanScore} || Skor musuh : ${computerScore}`;
+
+    document.getElementById(
+        "total-played"
+    ).innerHTML = `Total main : ${totalPlayed}`;
 }
 
-playGame(5);
+function playRound(humanSelection, computerSelection) {
+    if (humanSelection == "batu") {
+        if (computerSelection == "kertas") {
+            defeatMessage();
+            computerScore++;
+        } else if (computerSelection == "batu") {
+            drawMessage();
+        } else {
+            winMessage();
+            humanScore++;
+        }
+    } else if (humanSelection == "kertas") {
+        if (computerSelection == "kertas") {
+            drawMessage();
+        } else if (computerSelection == "batu") {
+            winMessage();
+            humanScore++;
+        } else {
+            defeatMessage();
+            computerScore++;
+        }
+    } else if (humanSelection == "gunting") {
+        if (computerSelection == "gunting") {
+            drawMessage();
+        } else if (computerSelection == "kertas") {
+            winMessage();
+            humanScore++;
+        } else {
+            defeatMessage();
+            computerScore++;
+        }
+    }
+}
+
+function defeatMessage() {
+    document.getElementById("result-text").innerHTML = `Kamu kalah oakwoawo`;
+}
+function winMessage() {
+    document.getElementById("result-text").innerHTML = `Kamu menang anjay`;
+}
+function drawMessage() {
+    document.getElementById("result-text").innerHTML = `Yah seri`;
+}
